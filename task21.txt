@@ -1,1 +1,40 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
+public class IframeAutomation {
+    public static void main(String[] args) {
+        // Set the path to the WebDriver executable
+        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+
+        // Initialize the WebDriver
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            // Open a new instance of the Chrome browser
+            driver.get("https://the-internet.herokuapp.com/iframe");
+
+            // Maximize the browser window
+            driver.manage().window().maximize();
+
+            // Switch to the iframe using CSS Selector
+            WebElement iframe = driver.findElement(By.cssSelector("#mce_0_ifr"));
+            driver.switchTo().frame(iframe);
+
+            // Locate the "p" tag inside the iframe
+            WebElement pTag = driver.findElement(By.cssSelector("#tinymce p"));
+            
+            // Clear any existing text and write "Hello People"
+            pTag.clear();
+            pTag.sendKeys("Hello People");
+
+            // Switch back to the main content
+            driver.switchTo().defaultContent();
+
+        } finally {
+            // Close the browser instance
+            driver.quit();
+        }
+    }
+}
